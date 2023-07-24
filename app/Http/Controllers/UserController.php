@@ -2,38 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\User;
-use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
-    public function register(User $user,UserRequest $request)
+    public function register(Request $request)
     {
-        $input = $request['register'];//requestに含まれるregister配列形式
-        $user->fill($input)->save();//Userモデルの$fillableを保存する
-        return redirect('/user/' . $user->id);//詳細画面へリダイレクトする
+        $user=User::create([
+            'name' => $request->name,
+            'age' => $request->age,         
+        ]);
+        
+        return response()->json($user->id);//Created
     }
     
-    public function get(User $user)
+    public function fetch(Request $request)
     {   
-        return view('users/detail')->with(['user' => $user]);//詳細画面を返す
+        $user = User::find($request->id);
+        
+        if(!$user){
+            return response()->json(['NotFound' => '対象のレコードが見つかりません。'],404);
+        }
+        
+        return response()->json($user);//OK
     }
     
-    public function edit(User $user)
+    public function update(Request $request)
     {
-        return view('users/edit')->with(['user' => $user]);//編集画面を返す
+        $user = User::find($request->id);
+        
+        if(!$user){
+            return response()->json([ 'NotFound' => '対象のレコードが見つかりません。' ],404);
+        }
+        
+        $user->update([
+            'name' => $request->name,
+        ]);
+        
+        return response()->json($user);//OK
     }
     
-    public function update(UserRequest $request,User $user)//registerメソッドと同様の動きをする
-    {
-        $input_user = $request['register'];
-        $user->fill($input_user)->save();
-        return redirect('/user/' . $user->id);
-    }
-    
-    public function delete(User $user)
+    public function delete(Request $request)
     {   
-        $user->delete();//$userを削除する
-        return redirect('/');//登録表示にリダイレクトする
+        $user = User::find($request->id);
+        
+        if(!$user){
+            return response()->json([ 'NotFound' => '対象のレコードが見つかりません。' ],404);
+        }
+        
+        $user->delete();
+        
+        return response()->json([ 'OK' => '対象のレコードを削除しました。' ],200);
     }
 }

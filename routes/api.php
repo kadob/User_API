@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('/user', [UserController::class,'register']);//ユーザーの新規登録
+Route::get('/user/{user}', [UserController::class,'fetch']);//ユーザーの取得
+Route::put('/user/{user}', [UserController::class,'update']);//ユーザーの更新
+Route::delete('/user/{user}', [UserController::class,'delete']);//ユーザーの削除
