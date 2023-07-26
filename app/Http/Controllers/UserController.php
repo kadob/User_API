@@ -18,20 +18,16 @@ class UserController extends Controller
     }
     
     public function fetch(Request $request,User $user)
-    {   
-        //$user = User::find($request->id);
-        
+    {    
         if(!$user){
             return response()->json(['NotFound' => '対象のレコードが見つかりません。'],404);
         }
         
-        return response()->json($user);//OK
+        return response()->json($user->name,$user->age);//OK
     }
     
     public function update(Request $request,User $user)
-    {
-        //$user = User::find($request->id);
-        
+    {    
         if(!$user){
             return response()->json([ 'NotFound' => '対象のレコードが見つかりません。' ],404);
         }
@@ -40,13 +36,11 @@ class UserController extends Controller
             'name' => $request->name,
         ]);
         
-        return response()->json($user);//OK
+        return response()->json($user->name,$user->age);//OK
     }
     
     public function delete(Request $request,User $user)
     {   
-        //$user = User::find($request->id);
-        
         if(!$user){
             return response()->json([ 'NotFound' => '対象のレコードが見つかりません。' ],404);
         }
