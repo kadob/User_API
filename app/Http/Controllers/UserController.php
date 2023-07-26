@@ -23,7 +23,7 @@ class UserController extends Controller
             return response()->json(['NotFound' => '対象のレコードが見つかりません。'],404);
         }
         
-        return response()->json($user->name,$user->age);//OK
+        return response()->json(['name' => $user->name,'age' => $user->age,]);//OK
     }
     
     public function update(Request $request,User $user)
@@ -36,7 +36,7 @@ class UserController extends Controller
             'name' => $request->name,
         ]);
         
-        return response()->json($user->name,$user->age);//OK
+        return response()->json(['name' => $user->name,'age' => $user->age,]);//OK
     }
     
     public function delete(Request $request,User $user)
