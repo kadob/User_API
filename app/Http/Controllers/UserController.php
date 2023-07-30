@@ -10,10 +10,10 @@ class UserController extends Controller
     //ユーザーの新規登録
     public function register(Request $request)
     {
-        //json形式でリクエストのデータを取得    
+        //jsonのリクエストをPHPの配列形式で取得    
         $jsondata = $request->json()->all();
         
-        //リクエストに含まれるnameとageを保存
+        //$userに$jsondataのnameとageを保存
         $user = User::create([
             'name' => $jsondata['name'],
             'age' => $jsondata['age'],
@@ -31,11 +31,11 @@ class UserController extends Controller
         
         //idが存在しない場合、404を返す
         if(!$user){
-            return response()->json(['NotFound' => '対象のレコードが見つかりません。'],404);
+            return response()->json([ 'NotFound' => '対象のレコードが見つかりません。'],404);
         }
         
         //名前と年齢を返す
-        return response()->json(['name' => $user->name,'age' => $user->age,]);//OK
+        return response()->json([ 'name' => $user->name, 'age' => $user->age ],200);//OK
     }
     
     //ユーザーの更新
@@ -50,10 +50,10 @@ class UserController extends Controller
         
         //リクエストに含まれるnameを更新
         $user->update([
-            'name' => $jsondata->name,
+            'name' => $jsondata['name'],
         ]);
         
-        return response()->json(['name' => $user->name,'age' => $user->age,]);//OK
+        return response()->json([ 'name' => $user->name, 'age' => $user->age ],200);//OK
     }
     
     //ユーザーの削除
