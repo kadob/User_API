@@ -24,10 +24,10 @@ class UserController extends Controller
     }
     
     //ユーザーの取得
-    public function fetch(Request $request,User $user)//暗黙の結合で$userにはidが含まれている
+    public function fetch(Request $request, $userId)
     {
-        //json形式でリクエストのデータを取得
-        $jsondata = $request->json()->all();
+        //ユーザーレコードを検索
+        $user = User::find($userId);
         
         //idが存在しない場合、404を返す
         if(!$user){
@@ -39,10 +39,13 @@ class UserController extends Controller
     }
     
     //ユーザーの更新
-    public function update(Request $request,User $user)
+    public function update(Request $request,$userId)
     {
         //json形式でリクエストのデータを取得
         $jsondata = $request->json()->all();
+        
+        //ユーザーレコードを検索
+        $user = User::find($userId);
         
         if(!$user){
             return response()->json([ 'NotFound' => '対象のレコードが見つかりません。' ],404);
@@ -57,11 +60,11 @@ class UserController extends Controller
     }
     
     //ユーザーの削除
-    public function delete(Request $request,User $user)
+    public function delete(Request $request,$userId)
     {   
-        //json形式でリクエストのデータを取得
-        $jsondata = $request->json()->all();
-        
+        //ユーザーレコードを検索
+        $user = User::find($userId);
+            
         if(!$user){
             return response()->json([ 'NotFound' => '対象のレコードが見つかりません。' ],404);
         }
