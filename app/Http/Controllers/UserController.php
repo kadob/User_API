@@ -53,8 +53,8 @@ class UserController extends Controller
         
         //リクエストに含まれるnameを更新
         $user->update([
-            'name' => $jsondata['name'],
-        ]);  
+            'name' => $jsondata->input('name'),
+        ]);
         
         return response()->json([ 'name' => $user->name, 'age' => $user->age ],200);//OK
     }
