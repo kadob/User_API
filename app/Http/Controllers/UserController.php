@@ -41,15 +41,15 @@ class UserController extends Controller
     //ユーザーの更新
     public function update(Request $request,$userId)
     {
-        //json形式でリクエストのデータを取得
-        $jsondata = $request->json()->all();
-        
         //ユーザーレコードを検索
         $user = User::find($userId);
         
         if(!$user){
             return response()->json([ 'NotFound' => '対象のレコードが見つかりません。' ],404);
         }
+        
+        //json形式でリクエストのデータを取得
+        $jsondata = $request->json()->all();
         
         //リクエストに含まれるnameを更新
         $user->update([
