@@ -16,6 +16,6 @@ use App\Http\Controllers\UserController;
 */
 
 Route::post('/user', [UserController::class,'register']);//ユーザーの新規登録
-Route::get('/user/{user}', [UserController::class,'fetch']);//ユーザーの取得
-Route::put('/user/{user}', [UserController::class,'update']);//ユーザーの更新
-Route::delete('/user/{user}', [UserController::class,'delete']);//ユーザーの削除
+Route::get('/user/{userId}', [UserController::class,'fetch']);//ユーザーの取得
+Route::put('/user/{userId}', [UserController::class,'update']);//ユーザーの更新
+Route::delete('/user/{userId}', [UserController::class,'delete']);//ユーザーの削除
