@@ -48,12 +48,12 @@ class UserController extends Controller
             return response()->json([ 'NotFound' => '対象のレコードが見つかりません。' ],404);
         }
         
-        //jsonのリクエストをPHPの配列形式で取得    
+        //jsonのリクエストをPHPの配列形式で取得
         $jsondata = $request->json()->all();
         
         //リクエストに含まれるnameを更新
         $user->update([
-            'name' => $jsondata->input('name'),
+            'name' => $jsondata['name'],
         ]);
         
         return response()->json([ 'name' => $user->name, 'age' => $user->age ],200);//OK
