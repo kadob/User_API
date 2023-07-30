@@ -11,23 +11,23 @@ class UserController extends Controller
     public function register(Request $request)
     {
         //json形式でリクエストのデータを取得    
-        $jsondata = $request->json()->all();
+        $jsondata = $request->all();
         
         //リクエストに含まれるnameとageを保存
         $user = User::create([
-            'name' => $jsondata->name,
-            'age' => $jsondata->age,
+            'name' => $jsondata['name'],
+            'age' => $jsondata['age'],
         ]);
         
         //idのみを返す
-        return response()->json($user->id);//Created
+        return response()->json([ 'id' => $user->id], 201);//Created
     }
     
     //ユーザーの取得
     public function fetch(Request $request,User $user)//暗黙の結合で$userにはidが含まれている
     {
         //json形式でリクエストのデータを取得
-        //$data = $request->json()->all();
+        $jsondata = $request->json()->all();
         
         //idが存在しない場合、404を返す
         if(!$user){
@@ -60,7 +60,7 @@ class UserController extends Controller
     public function delete(Request $request,User $user)
     {   
         //json形式でリクエストのデータを取得
-        //$data = $request->json()->all();
+        $jsondata = $request->json()->all();
         
         if(!$user){
             return response()->json([ 'NotFound' => '対象のレコードが見つかりません。' ],404);
