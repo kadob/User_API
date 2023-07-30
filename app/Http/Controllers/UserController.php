@@ -11,7 +11,7 @@ class UserController extends Controller
     public function register(Request $request)
     {
         //json形式でリクエストのデータを取得    
-        $jsondata = $request->all();
+        $jsondata = $request->json()->all();
         
         //リクエストに含まれるnameとageを保存
         $user = User::create([
